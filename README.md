@@ -7,11 +7,13 @@ contract, VSOCK, IMDS, a persistent root disk, and a small typed customization.
 ## Build from the Console
 
 1. Open **VMM Images** and choose **Build image**.
-2. Select **Public GitHub repository** as the build-context source.
+2. Select **GitHub repository** as the build-context source.
 3. Enter `https://github.com/vappcloud/vappcloud-vmm-image-template`.
-4. Select a branch, tag, or commit. VAppCloud resolves it to an immutable commit
+4. For a private repository, select your existing GitHub provider connection.
+   Public repositories do not require a provider connection.
+5. Select a branch, tag, or commit. VAppCloud resolves it to an immutable commit
    before the build starts.
-5. Leave **Context directory** empty because `image.toml` is at the repository
+6. Leave **Context directory** empty because `image.toml` is at the repository
    root, select a running build device, and start the build.
 
 The example uses only typed provisioners, so **Allow shell provisioners** can
@@ -31,8 +33,10 @@ same commit therefore have auditable source provenance.
 
 ## Safety contract
 
-The Console/API importer accepts public `github.com` repositories only. It
-rejects unsafe paths, links and special files, oversized archives, missing root
-`image.toml`, and invalid refs. Shell provisioners require explicit opt-in.
+The Console/API importer accepts public `github.com` repositories and private
+repositories authorized through an account-owned GitHub provider connection.
+It rejects unsafe paths, links and special files, oversized archives, missing
+root `image.toml`, invalid refs, and provider connections owned by another
+account. Shell provisioners require explicit opt-in.
 
 Licensed under the Mozilla Public License 2.0.
