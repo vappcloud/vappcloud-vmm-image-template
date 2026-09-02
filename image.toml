@@ -1,0 +1,20 @@
+schema_version = 1
+
+[image]
+name = "github-ubuntu-desktop"
+version = "1.0.0"
+
+[profile]
+name = "ubuntu-vapp-desktop"
+
+[[provision]]
+type = "apt"
+install = ["htop", "jq"]
+update = true
+no_recommends = true
+
+[[provision]]
+type = "file"
+path = "/etc/vapp-image-source.txt"
+content_file = "assets/vapp-image-source.txt"
+mode = "0644"
