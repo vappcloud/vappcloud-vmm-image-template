@@ -40,3 +40,38 @@ root `image.toml`, invalid refs, and provider connections owned by another
 account. Shell provisioners require explicit opt-in.
 
 Licensed under the Mozilla Public License 2.0.
+
+## AI Studio live image presets
+
+The root example remains a minimal installed-root desktop. For a default VMM OS
+switch with AI tools preinstalled, choose one of these separate live contexts:
+
+| Context directory | Commands |
+| --- | --- |
+| `vmm-images/ubuntu-ai-codex` | Codex 0.164.0 |
+| `vmm-images/ubuntu-ai-claude` | Claude Code 2.1.311 |
+| `vmm-images/ubuntu-ai-both` | Both |
+
+Use this public repository and an immutable reviewed commit, select your build
+device's `aarch64` or `x86_64` architecture, and enable **Allow shell provisioners**.
+No GitHub provider connection is needed. Each context contains its complete
+`image.toml`, package manifest, integrity lockfile, and installer. The
+`ubuntu-vapp-desktop-live` profile preserves the default guest's live/data layout;
+these packages do not change the minimal GUI-only base template.
+
+Node 22.23.5 uses official SHA256-pinned archives. CLI dependencies are version
+and integrity locked; npm lifecycle scripts are disabled. Selected commands are
+installed under `/usr/local/bin` and checked with `--version` during the build.
+The target Ubuntu architecture comes from its dpkg database; extracted Node files
+remain root-owned. Versions are recorded in `/etc/vapp/ai-workstation-versions`.
+No provider credentials or user HOME are included. Authenticate after boot;
+retained credentials and HOME belong to the VMM, not an individual project.
+
+Validate the presets without installing dependencies:
+
+```sh
+node --test test/ai-image-presets.test.mjs
+```
+
+The CLI packages retain their respective vendor licenses. This repository
+contains installation inputs, not copies of the downloaded vendor binaries.
