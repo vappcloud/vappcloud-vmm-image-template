@@ -1,0 +1,30 @@
+schema_version = 1
+
+[image]
+name = "ubuntu-ai-claude"
+version = "1.0.0"
+
+[profile]
+name = "ubuntu-vapp-desktop-live"
+
+[[provision]]
+type = "apt"
+update = true
+no_recommends = true
+install = ["ca-certificates", "curl", "xz-utils", "git"]
+
+[[provision]]
+type = "file"
+path = "/opt/vapp/ai-tools/package.json"
+content_file = "package.json"
+mode = "0644"
+
+[[provision]]
+type = "file"
+path = "/opt/vapp/ai-tools/package-lock.json"
+content_file = "package-lock.json"
+mode = "0644"
+
+[[provision]]
+type = "shell"
+script = "scripts/install-ai-agents.sh"
